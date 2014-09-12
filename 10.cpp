@@ -1,8 +1,9 @@
+
 /* 
 * @Author: skyrim
 * @Date:   2014-09-03 15:43:33
 * @Last Modified by:   skyrim
-* @Last Modified time: 2014-09-03 17:24:20
+* @Last Modified time: 2014-09-12 16:03:56
 */
 /*1、    电话本
         编写C++程序完成以下功能：
@@ -15,81 +16,72 @@
 */
 
 #include <iostream>
-#include <vector>
+#include <map>
 #include <fstream>
 
 using namespace std;
 
-class telephone_book
-{
-public:
-    string name;
-    string telephone;
-};
-
 int main(){
-    vector<telephone_book> book;
-    telephone_book one ;
+    map<string, string> book;   //map容器，储存姓名和电话
+    string name , telephone ;
+    //从data.txt读取姓名，电话并添加到book中
     ifstream file("data.txt") ;
-    while(file >> one.name >> one.telephone) {
-        book.push_back(one) ;
-    }
+    while(file >> name >> telephone) book.insert({name,telephone}) ;
     file.close();
+    //本程序实现5个小功能
     cout << "1.show all \n2.search \n3.add \n4.delete \n5.save and quit" <<endl ;
     int mode ;
     while(cin >> mode ){
         switch(mode){
             case 1:{
-                for( auto &i : book){
-                    cout << i.name << '\t' << i.telephone << endl ;
+                //遍历book，输出所有key及对应value
+                for(const auto &i : book){
+                    cout << i.first << '\t' << i.second << endl ;
                 }
                 break ;
             }
             case 2: {
+                //读入search_name，查找并输出对应的key和value
                 string search_name;
                 cout << "name:" ;
                 cin >> search_name ;
-                for( auto &i : book){
-                    if(search_name == i.name) {
-                        cout << i.name << '\t' << i.telephone << endl ;
-                        break ;
-                    }
-                }
+                const auto i = book.find(search_name) ; //查找search_name
+                if( i != book.end() ) cout << i->first << ' ' << i->second << endl ;    //找到输出
+                else cout << "no this name." << endl ;  //未找到提示
                 break ;
             }
             case 3: {
+                //读入姓名，电话并添加
                 cout << "name:" ;
-                cin >> one.name ;
+                cin >> name ;
                 cout << "telephone:" ;
-                cin >> one.telephone ;
-                book.push_back(one) ;
+                cin >> telephone ;
+                if(book.insert({name,telephone}).second) cout << "insert success." << endl ;    //插入成功
+                else cout << "insert fail." << endl ;   //插入失败
                 break ;
             }
             case 4: {
+                //读入姓名，并删除该姓名对应的数据
                 string delete_name ;
                 cout << "name:" ;
                 cin >> delete_name ;
-                auto it = book.begin();
-                for( auto &i : book){
-                    if(delete_name == i.name) {
-                        book.erase(it) ;
-                        break ;
-                    }
-                    else ++it ;
-                }
+                if(book.erase(delete_name)) cout << "delete success." << endl ; //删除成功
+                else cout << "delete fail." << endl ;   //该key不存在，删除失败
                 break ;
             }
             case 5: {
+                //把所有数据写入文件
                 ofstream save_file ("data.txt") ;
-                for( auto &i : book){
-                    save_file << i.name << ' ' << i.telephone << endl ;
+                for(const auto &i : book){
+                    save_file << i.first << ' ' << i.second << endl ;
                 }
                 save_file.close();
                 break ;
             }
             default: cout << "error" ;
         }
-        if (mode == 5) break ;
+        if (mode == 5) break ;  //跳出循环，结束程序
+        cout << "1.show all \n2.search \n3.add \n4.delete \n5.save and quit" <<endl ;
     }
     return 0;
 }
