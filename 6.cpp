@@ -2,7 +2,7 @@
 * @Author: skyrim
 * @Date:   2014-09-02 14:46:21
 * @Last Modified by:   skyrim
-* @Last Modified time: 2014-09-08 17:45:17
+* @Last Modified time: 2014-09-12 14:36:23
 */
 /*1、    矩阵（一）
 编写C++程序完成以下功能：
@@ -38,7 +38,7 @@ public:
             cout << endl ;
         }
     }   
-    //这个版本的矩阵通过声明友元来进行加减操作。
+    //这个版本的矩阵通过声明友元来进行加减操作。注意：这里不推荐这样做，参看矩阵2。
     friend void add (const matrix &A1 ,const matrix &A2 ,matrix &A3);
     friend void subtract (const matrix &A1 ,const matrix &A2 ,matrix &A3);
 private:

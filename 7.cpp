@@ -2,7 +2,7 @@
 * @Author: skyrim
 * @Date:   2014-09-02 15:15:44
 * @Last Modified by:   skyrim
-* @Last Modified time: 2014-09-08 18:22:51
+* @Last Modified time: 2014-09-12 14:39:34
 */
 /*2、    矩阵（二）
 编写C++程序完成以下功能：
@@ -25,7 +25,10 @@ using namespace std;
 class matrix
 {
 public:
-    matrix() = default ;
+    ~matrix() {
+        delete_matrix();
+    }
+    
     //delete_matrix成员函数：删除用new建立的二维数组
     void delete_matrix() {
         if (array){
@@ -35,21 +38,27 @@ public:
             array = 0 ;
         }
     }
-    //input_matrix成员函数：用new建立二维数组并逐个赋值
-    void input_matrix() {
+
+    //初始化函数：用于初始化动态数组
+    void initialise (){
         /*      峰神提供的方法，想常人之所不能想
                 int (*A1)[5];
                 A1 = new int [4][5];
         */
-       //初始化
         array = new int *[4];
         for(int j=0 ; j < 4 ; j++)
             array[j] = new int [5]; 
+    }
+
+    //input_matrix成员函数：用new建立二维数组并逐个赋值
+    void input_matrix() {
+        initialise () ;  //初始化
         //逐个赋值
         for(int i=0 ; i < 4 ; i++)
             for(int j=0 ; j < 5 ; j++)
                 cin >> array[i][j];
     }
+
     //output_matrix成员函数：把矩阵输出到屏幕
     void output_matrix(){
         for(int i=0 ; i < 4 ; i++){
@@ -58,9 +67,11 @@ public:
             cout << endl ;
         }
     }   
-    //这个版本的矩阵通过声明成员函数来进行加减操作
+
+    //这个版本的矩阵通过声明成员函数来进行加减操作。
     void add (const matrix &A1 ,const matrix &A2 );
     void subtract (const matrix &A1 ,const matrix &A2 );
+
 private:
     //用应该默认为空的指向指针的指针作二维数组的初始化工作
     int **array = 0;
@@ -86,10 +97,7 @@ int main(){
 //求和函数：重新初始化A3，并将A1，A2中的二维数组元素逐个求和赋给A3
 void matrix::add (const matrix &A1 ,const matrix &A2 ){
     delete_matrix();    //清空旧元素
-    //初始化
-    array = new int *[4];
-    for(int j=0 ; j < 4 ; j++)
-        array[j] = new int [5]; 
+    initialise () ;  //初始化
     //逐个赋值
     for(int i=0 ; i < 4 ; i++)
         for(int j=0 ; j < 5 ; j++)
@@ -99,10 +107,7 @@ void matrix::add (const matrix &A1 ,const matrix &A2 ){
 //求和函数：重新初始化A3，并将A1，A2中的二维数组元素逐个求差赋给A3
 void matrix::subtract (const matrix &A1 ,const matrix &A2 ){
     delete_matrix();    //清空旧元素
-    //初始化
-    array = new int *[4];
-    for(int j=0 ; j < 4 ; j++)
-        array[j] = new int [5]; 
+    initialise () ; //初始化
     //逐个赋值
     for(int i=0 ; i < 4 ; i++)
         for(int j=0 ; j < 5 ; j++)

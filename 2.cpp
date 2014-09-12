@@ -2,7 +2,7 @@
 * @Author: skyrim
 * @Date:   2014-09-02 12:28:10
 * @Last Modified by:   skyrim
-* @Last Modified time: 2014-09-04 18:55:27
+* @Last Modified time: 2014-09-12 14:09:12
 */
 /*1、    矩形
 编写C++程序完成以下功能：
@@ -27,11 +27,11 @@ public:
     //构造函数1：当用户不输入坐标数据时，默认为坐标原点（0，0）
     Point(): x(0) ,y(0) {}
     //构造函数2：当用户输入坐标数据时，使用用户坐标
-    Point (double x_coordinate , double y_coordinate) : x(x_coordinate) , y(y_coordinate) { system("pause"); } 
-    ~Point () { system("pause"); }  //析构函数
+    Point (double x_coordinate , double y_coordinate) : x(x_coordinate) , y(y_coordinate) {} 
+    ~Point () {}  //析构函数
     double x,y;     //坐标储存的成员变量
     //提供计算两点之间距离的方法
-    double count_distance (Point A ,Point B){
+    double count_distance (const Point &A ,const Point &B){
         return sqrt( (A.x-B.x)*(A.x-B.x)+(A.y-B.y)*(A.y-B.y) );
     }
 };
@@ -41,8 +41,8 @@ class Rectangular
 {
 public:
     Rectangular() = default ;   //c++11标准的默认构造
-    Rectangular(Point A ,Point B) : ul (A) ,lr (B) { system("pause"); }     //根据点坐标初始化类
-    ~Rectangular () { system("pause"); }    //析构函数
+    Rectangular(Point A ,Point B) : ul (A) ,lr (B) {}     //根据点坐标初始化类
+    ~Rectangular () {}    //析构函数
     //提供计算矩形面积的方法
     double count_S (){
        return fabs((ul.x-lr.x) * (ul.y-lr.y)) ;

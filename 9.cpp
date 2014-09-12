@@ -2,7 +2,7 @@
 * @Author: skyrim
 * @Date:   2014-09-03 14:18:15
 * @Last Modified by:   skyrim
-* @Last Modified time: 2014-09-10 15:10:21
+* @Last Modified time: 2014-09-12 15:01:16
 */
 /*1、    对Point类重载＋＋和――运算符
     编写C++程序完成以下功能：
@@ -22,35 +22,36 @@ public:
     Point(): x(0) ,y(0) {}  //构造函数1：不传入坐标，赋值（0,0）
     Point (double x_coordinate , double y_coordinate) : x(x_coordinate) , y(y_coordinate) {}    //构造函数2：传入坐标，所以用户传入的值
 
-    //
+    //++a（返回新值）
     Point & operator++ (){
         ++x;
         ++y;
         return *this;
     }
-    //
+    //--a（返回新值）
     Point & operator-- (){
         --x;
         --y;
         return *this;
     }
-    //
+    //a++（返回旧值）
     Point operator++ (int){
         Point ret = *this ;
         ++ *this ;
         return ret;
     }
-    //重载后置--运算符
+    //a--（返回旧值）
     Point operator-- (int){
         Point ret = *this ;
         -- *this ;
         return ret;
     }
+    //成员函数：输出坐标
     void print_point (){
         cout << "(" << x << "," << y << ")" ;
     }
 private:
-    double x,y;
+    double x,y; //储存坐标
 };
 
 int main(){
@@ -62,10 +63,10 @@ int main(){
     cout << ("1.Point++ \n2.Point-- \n3.++Point \n4.Point-- \n ");
     while(cin >> mode) {
         switch(mode){
-            case 1 : (mypoint++).print_point(); break;
-            case 2 : (mypoint--).print_point(); break;
-            case 3 : (++mypoint).print_point(); break;
-            case 4 : (--mypoint).print_point(); break;
+            case 1 : (mypoint++).print_point(); break;  //输出a++
+            case 2 : (mypoint--).print_point(); break;  //输出a--
+            case 3 : (++mypoint).print_point(); break;  //输出++a
+            case 4 : (--mypoint).print_point(); break;  //输出--a
             default : cout << "error!" ;
         }
     }

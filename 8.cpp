@@ -2,7 +2,7 @@
 * @Author: skyrim
 * @Date:   2014-09-02 16:15:36
 * @Last Modified by:   skyrim
-* @Last Modified time: 2014-09-09 11:14:05
+* @Last Modified time: 2014-09-12 14:58:36
 */
 /*
 3、  矩阵（三）
@@ -41,10 +41,7 @@ public:
         //拷贝行数，列数
         lines = copy_matrix.lines ;
         rows = copy_matrix.rows ;
-        //new创建二维数组
-        array = new int *[lines];
-        for(int j=0 ; j < lines ; j++)
-            array[j] = new int [rows]; 
+        initialise () ;  //初始化
         //给二维数组赋值
         for(int i=0 ; i < lines ; i++)
             for(int j=0 ; j < rows ; j++)
@@ -53,7 +50,6 @@ public:
     //析构函数，删除new建立的二维数组
     ~matrix() {
         delete_matrix();
-        system("pause") ;
     }
     //这个成员函数用于删除已经建立的动态数组
     void delete_matrix() {
@@ -67,12 +63,15 @@ public:
             rows = 0 ;  //列置零
         }
     }
-    //这个成员函数用于将用户输入的数据存入动态数组
-    void input_matrix() {
-        //开辟动态数组
+    //初始化函数：用于初始化动态数组
+    void initialise (){
         array = new int *[lines];
         for(int j=0 ; j < lines ; j++)
-            array[j] = new int [rows];  
+            array[j] = new int [rows];
+    }
+    //这个成员函数用于将用户输入的数据存入动态数组
+    void input_matrix() {
+        initialise () ;  //初始化 
         //循环赋值
         for(int i=0 ; i < lines ; i++)
             for(int j=0 ; j < rows ; j++){
@@ -93,10 +92,7 @@ public:
         delete_matrix();    //删除旧数组
         lines = A.lines , rows = A.rows ;
         matrix A3(lines,rows) ;
-        //开辟新数组
-        array = new int *[lines];
-        for(int j=0 ; j < lines ; j++)
-            array[j] = new int [rows]; 
+        A3.initialise () ;  //初始化 
         //循环赋值
         for(int i=0 ; i < lines ; i++)
             for(int j=0 ; j < rows ; j++)
@@ -158,10 +154,7 @@ matrix operator+ (const matrix &A1 ,const matrix &A2){
     //如果A1,A2行，列数相等，则求和
     if(A1.lines == A2.lines && A1.rows == A2.rows){
         A3.lines = A1.lines , A3.rows = A1.rows ;
-        //开辟新数组
-        A3.array = new int *[A3.lines];
-        for(int j=0 ; j < A3.lines ; j++)
-            A3.array[j] = new int [A3.rows]; 
+        A3.initialise () ;  //初始化 
         for(int i=0 ; i < A3.lines ; i++)
             for(int j=0 ; j < A3.rows ; j++)
                 A3.array[i][j]=A1.array[i][j]+A2.array[i][j];
@@ -174,10 +167,7 @@ matrix operator- (const matrix &A1 ,const matrix &A2){
     //如果A1,A2行，列数相等，则求和
     if(A1.lines == A2.lines && A1.rows == A2.rows){
         A3.lines = A1.lines , A3.rows = A1.rows ;
-        //开辟新数组
-        A3.array = new int *[A3.lines];
-        for(int j=0 ; j < A3.lines ; j++)
-            A3.array[j] = new int [A3.rows]; 
+        A3.initialise () ;  //初始化 
         for(int i=0 ; i < A3.lines ; i++)
             for(int j=0 ; j < A3.rows ; j++)
                 A3.array[i][j]=A1.array[i][j]-A2.array[i][j];

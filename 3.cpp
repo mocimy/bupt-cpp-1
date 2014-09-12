@@ -2,7 +2,7 @@
 * @Author: skyrim
 * @Date:   2014-09-02 13:28:50
 * @Last Modified by:   skyrim
-* @Last Modified time: 2014-09-04 18:41:18
+* @Last Modified time: 2014-09-12 14:09:45
 */
 /*3、    友元
 编写C++程序完成以下功能：
@@ -52,6 +52,6 @@ int main(){
 }
 
 //Boat和Car的友元，功能：求重量和
-double TotalWeight(Boat& b, Car& c){
+double TotalWeight(const Boat& b,const Car& c){
     return b.weight + c.weight ;
 }
